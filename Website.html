@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brandon — IT Support &amp; Cloud Engineer in progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e14;
+    --surface: #131a24;
+    --surface-2: #1a2230;
+    --border: #232d3b;
+    --text: #e8eaed;
+    --text-dim: #8b96a5;
+    --teal: #5eead4;
+    --amber: #f5a623;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+  }
+
+  .mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ---------- Layout ---------- */
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 48px 32px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .headshot-wrap {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--teal);
+    margin-bottom: 20px;
+    background: var(--surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .headshot-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .headshot-placeholder {
+    width: 40px;
+    height: 40px;
+    color: var(--text-dim);
+  }
+
+  .sidebar h1 {
+    font-size: 1.5rem;
+    margin: 0 0 4px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .role-line {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin: 0 0 28px;
+  }
+
+  /* Signature element: typed status line */
+  .status-line {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--teal);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 36px;
+    min-height: 2.6em;
+    display: flex;
+    align-items: center;
+  }
+
+  .status-line .cursor {
+    display: inline-block;
+    width: 7px;
+    height: 1em;
+    background: var(--teal);
+    margin-left: 2px;
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  nav { display: flex; flex-direction: column; gap: 4px; }
+
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.92rem;
+    padding: 9px 10px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    font-weight: 500;
+  }
+
+  nav a .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--amber);
+    font-size: 0.78rem;
+    margin-right: 8px;
+  }
+
+  nav a:hover, nav a:focus-visible {
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  nav a.active {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+
+  .sidebar-footer a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ---------- Main content ---------- */
+  main {
+    padding: 64px 56px 120px;
+    max-width: 760px;
+  }
+
+  section {
+    margin-bottom: 72px;
+    scroll-margin-top: 32px;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+    margin: 0 0 20px;
+    font-weight: 700;
+  }
+
+  p { color: var(--text); }
+  section p { color: #c6cdd6; }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--teal);
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 14px;
+  }
+
+  .card h3 {
+    margin: 0 0 6px;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .card .meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+
+  .path {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 28px;
+  }
+
+  .path-step {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 16px;
+    position: relative;
+    padding-bottom: 28px;
+  }
+
+  .path-step:last-child { padding-bottom: 0; }
+
+  .path-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--teal);
+    margin-top: 4px;
+    justify-self: center;
+    z-index: 1;
+  }
+
+  .path-step.done .path-dot { background: var(--teal); }
+  .path-step.current .path-dot { border-color: var(--amber); background: var(--amber); }
+  .path-step.future .path-dot { border-color: var(--text-dim); }
+
+  .path-step::before {
+    content: '';
+    position: absolute;
+    left: 13px;
+    top: 16px;
+    bottom: -4px;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .path-step:last-child::before { display: none; }
+
+  .path-label {
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .path-step.current .path-label { color: var(--amber); }
+
+  .path-sub {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  a.contact-link {
+    color: var(--teal);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s;
+  }
+  a.contact-link:hover { border-color: var(--teal); }
+
+  .contact-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.92rem;
+  }
+
+  footer.page-footer {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ---------- Mobile ---------- */
+  .mobile-toggle { display: none; }
+
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+
+    .sidebar {
+      position: relative;
+      height: auto;
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      flex-wrap: wrap;
+    }
+
+    .headshot-wrap { width: 56px; height: 56px; margin-bottom: 0; }
+    .status-line { display: none; }
+    .sidebar-footer { display: none; }
+
+    .sidebar h1 { font-size: 1.2rem; margin-bottom: 0; }
+    .role-line { display: none; }
+
+    nav {
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      gap: 6px;
+    }
+
+    main { padding: 40px 24px 80px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .status-line .cursor { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="headshot-wrap">
+  <img src="headshot.png" alt="Headshot.png">
+</div>
+
+    <h1>Brandon</h1>
+    <p class="role-line">IT Support</p>
+
+    <div class="status-line">
+      <span id="typed-text"></span><span class="cursor"></span>
+    </div>
+
+    <nav>
+      <a href="#about"><span class="tag">01</span>About</a>
+      <a href="#path"><span class="tag">02</span>Career Path</a>
+      <a href="#skills"><span class="tag">03</span>Skills</a>
+      <a href="#certs"><span class="tag">04</span>Certifications</a>
+      <a href="#projects"><span class="tag">05</span>Projects</a>
+      <a href="#hobbies"><span class="tag">06</span>Outside Work</a>
+      <a href="#contact"><span class="tag">07</span>Contact</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      Based in New Jersey<br>
+      <a href="#contact">Get in touch →</a>
+    </div>
+  </aside>
+
+  <main>
+
+    <section id="about">
+      <div class="eyebrow">// about</div>
+      <h2>Who am I?</h2>
+      <p>I’m transitioning into IT after years working hands-on in trades and food service — glazing, plumbing assistance, construction, and kitchens. Those roles taught me how to diagnose problems quickly, work under pressure, and see tasks through to completion. I’m now applying that same mindset to IT support, networking, and security, supported by CompTIA A+ and Security+ certifications and hands-on lab work.</p>
+      <p>Outside of work, I keep things simple: family, a few solid hobbies, and steady progress toward a career in tech.</p>
+    </section>
+
+    <section id="path">
+      <div class="eyebrow">// career path</div>
+      <h2>Where I've been, where I'm going</h2>
+      <div class="path">
+        <div class="path-step done">
+          <div class="path-dot"></div>
+          <div>
+            <div class="path-label">Trades &amp; food service</div>
+            <div class="path-sub">Glazier, plumbing assistant, construction, kitchens — teamwork, troubleshooting, working under pressure</div>
+          </div>
+        </div>
+        <div class="path-step done">
+          <div class="path-dot"></div>
+          <div>
+            <div class="path-label">CompTIA A+ &amp; Security+</div>
+            <div class="path-sub">Foundational IT and security certifications, earned</div>
+          </div>
+        </div>
+        <div class="path-step current">
+          <div class="path-dot"></div>
+          <div>
+            <div class="path-label">Per Scholas IT Support Program</div>
+            <div class="path-sub">Currently enrolled — building toward help desk and IT support roles</div>
+          </div>
+        </div>
+        <div class="path-step future">
+          <div class="path-dot"></div>
+          <div>
+            <div class="path-label">B.S. Cloud &amp; Network Engineering (WGU)</div>
+            <div class="path-sub">Planned, using credit transfer from certs and coursework already completed</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="eyebrow">// skills</div>
+      <h2>What I work with</h2>
+      <div class="pill-row">
+        <span class="pill">Windows Server</span>
+        <span class="pill">Active Directory</span>
+        <span class="pill">Networking Fundamentals</span>
+        <span class="pill">Troubleshooting</span>
+        <span class="pill">Security Fundamentals</span>
+        <span class="pill">Hardware Diagnostics</span>
+      </div>
+    </section>
+
+    <section id="certs">
+      <div class="eyebrow">// certifications</div>
+      <h2>Certifications</h2>
+      <div class="card">
+        <h3>CompTIA Security+</h3>
+        <div class="meta">Certified</div>
+      </div>
+      <div class="card">
+        <h3>CompTIA A+</h3>
+        <div class="meta">Certified</div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="eyebrow">// projects</div>
+      <h2>Hands-on work</h2>
+      <div class="card">
+        <h3>Active Directory Home Lab</h3>
+        <div class="meta">VirtualBox · Windows Server 2019 · Windows 10 Pro</div>
+        <p style="margin:0;">Built a self-hosted lab with user and group management, password reset workflows, and an organizational unit (OU) structure — practical, hands-on practice with the same tools used in real help desk and sysadmin environments.</p>
+      </div>
+    </section>
+
+    <section id="hobbies">
+      <div class="eyebrow">// outside work</div>
+      <h2>When I'm off the clock</h2>
+      <p>Family comes first — I keep that part of life close and don't put much of it online, but it's a big part of what keeps me grounded and motivated through a career change. The rest of my time goes toward studying, and steady progress toward the next certifications.</p>
+    </section>
+
+    <section id="contact">
+      <div class="eyebrow">// contact</div>
+      <h2>Let's talk</h2>
+      <div class="contact-grid">
+        <div>Email: <a class="contact-link" href="mailto:youremail@example.com">Brandonh64739@gmail.com</a></div>
+        <div>LinkedIn: <a class="contact-link" href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener">https://www.linkedin.com/in/brandon-harrison-101-/</a></div>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      Built by Brandon · New Jersey
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // Signature element: typed status line in the sidebar.
+  // Visualizes the actual career sequence — this is a real progression, not decoration.
+  const phrases = [
+    "CompTIA A+ - Certified",
+    "CompTIA Security+ Certified",
+    "Help Desk (in progress)"
+  ];
+  const el = document.getElementById('typed-text');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reduceMotion) {
+    el.textContent = phrases.join(' → ');
+  } else {
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    function tick() {
+      const current = phrases[phraseIndex];
+
+      if (!deleting) {
+        charIndex++;
+        el.textContent = current.slice(0, charIndex);
+        if (charIndex === current.length) {
+          deleting = true;
+          setTimeout(tick, 1400);
+          return;
+        }
+      } else {
+        charIndex--;
+        el.textContent = current.slice(0, charIndex);
+        if (charIndex === 0) {
+          deleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+        }
+      }
+      setTimeout(tick, deleting ? 35 : 60);
+    }
+    tick();
+  }
+
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('main section');
+  const navLinks = document.querySelectorAll('nav a');
+
+  function setActive() {
+    let activeId = sections[0].id;
+    const scrollPos = window.scrollY + 100;
+    sections.forEach(sec => {
+      if (sec.offsetTop <= scrollPos) activeId = sec.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + activeId);
+    });
+  }
+  document.addEventListener('scroll', setActive);
+  setActive();
+</script>
+
+</body>
+</html>
