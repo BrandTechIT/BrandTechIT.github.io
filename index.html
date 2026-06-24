@@ -483,14 +483,15 @@
   // Signature element: typed status line in the sidebar.
   // Visualizes the actual career sequence — this is a real progression, not decoration.
   const phrases = [
-    "CompTIA A+ - Certified",
-    "CompTIA Security+ - Certified"
+    "‎ ‎ ‎ ‎ Certifications:‎‎‎",
+    "‎‎ ‎ ‎  ‎‎‎‎ ✔ CompTIA A+",
+    "‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎✔ CompTIA Security+"
   ];
   const el = document.getElementById('typed-text');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (reduceMotion) {
-    el.textContent = phrases.join(' → ');
+    el.textContent = phrases.join('  ');
   } else {
     let phraseIndex = 0;
     let charIndex = 0;
